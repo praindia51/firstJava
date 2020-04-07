@@ -1,0 +1,206 @@
+yum server configuration
+
+1)cd /etc/yum.repos.d
+2)ls
+df -h
+mount /dev/cdrom /mnt
+df -h
+yum repolist
+3)vi any.repo
+
+[rhel7_yum_srv]
+name=bla bla rhedhat 7 server
+baseurl=file:///mnt/
+enabled=1
+gpgcheck=0
+wq!
+
+yum repolist
+yum list *target*
+yum info targetcli.noarch
+rpm -qi targetcli.noarch
+yum install targetcli.noarch
+yum list *target*
+fdisk -l
+fdisk /dev/sda
+p
+n
+p--primary
+3
+default
++500M
+p
+w
+ cat /rpoc/partitions
+partprobe -s /dev/sda
+cat /proc/partitions
+ifconfig
+ifconfig eth0 172.168.0.180
+ifconfig eno16777736 172.168.0.180
+ifconfig
+targetcli
+/>ls
+/>cd /backstores
+/backstore>ls
+/backstore>cd block
+/backstore/block>create disk1 /dev/sda3
+/backstore/block>ls
+/backstore/block>cd /
+/>ls
+/>cd backstore
+/backstore>cd fileio
+/backstore/fileio>create fileio1 /filexyz 100M
+/backstore/fileio>ls
+/backstore/fileio>cd /
+/>ls
+/>cd iscsi
+/issci>create iqn.2015-08.rhel7.com:srv1-disk1
+/issci>cd /
+/>ls
+/>cd /iscsi/iqn.2015-08.rhel17.com:srv1-disk1/tpg1/acls
+.....>pwd
+...../acls>create iqn.2015-08.rhel7.com:client1
+....../acls>ls
+/iscsi...../tpg1>cd luns
+/iscsi..../luns>create /backstores/block/disk1
+/isci.../luns>cd /
+/>cd /isci...../tpg1/portals
+/isci..../portals>create 172.168.0.180
+/isci.../portals>cd /
+/>ls
+/>exit
+
+
+#targetcli
+ls
+exit
+
+#systemctl status firewalld.service
+#sytemctl stop firewalld.service
+#systemctl status firewalld.service
+#systemctl disable firewalld.service
+#systemctl status firewalld.service
+#getenforece
+#setenforce 0
+#getenforece
+#systemctl enable target.service
+#systemctl status target.service
+#systemctl start target.service
+#systemctl status target.service
+
+rhel6 
+
+rpm -qa|grep initiator
+rpm -qa|grep iscsi*
+df -h
+cd /media/RHEL_6.2\disc\Packages
+ll *iscsi*
+rmp -ivh iscsi
+#rpm -ivh --nodeps iscsi------dont check dependcies for installation of package
+vi /etc/iscsi/initiatorname.iscsi
+InitiatorName=blabla.....
+q!
+
+tailf /var/log/messages--------on client server--rhel6
+tailf /var/log/messages----on target server--rhel7--make dmarkation
+
+man iscsiadm
+#isciadm --mode discoverydb --type sendtargets --portal 172.168.0.180 --discovery
+
+#isciadm --mode node --targetname iqn.2015-08.rhel7.com:srv1-disk1 --portal 172.168.0.180:3260 --login
+
+vi /etc/iscsi/initiatorname.iscsi
+InitiatorName=iqn.2015-08.rhel7.com:client1
+wq!
+
+#/etc/init.d/iscsid restart
+
+#isciadm --mode node --targetname iqn.2015-08.rhel7.com:srv1-disk1 --portal 172.168.0.180:3260 --login
+
+#lsblk
+#isciadm --mode node --targetname iqn.2015-08.rhel7.com:srv1-disk1 --portal 172.168.0.180:3260 --logout
+
+
+rhel7
+targetctl
+/>cd /iscsi/...tpg1/luns
+/iscsi.../luns> create /backstore/fileio/fileio1
+/isc.../luns>cd /
+/>ls
+/>exit
+
+#systemctl restart target.service
+
+
+client---rhel6
+#isciadm --mode discoverydb --type sendtargets --portal 172.168.0.180 --discovery
+#isciadm --mode node --targetname iqn.2015-08.rhel7.com:srv1-disk1 --portal 172.168.0.180:3260 --login
+
+
+-------------------------------------------------------------------
+
+rhel6
+lsblk
+fdisk -l /dev/sdb
+fdisk /dev/sdb
+how to create gpt label on disk
+parted /dev/sdb
+(parted)print free
+(parted)help
+(parted)mklabel gpt
+(parted)print free
+(parted)mklabel msdos
+(parted)print free
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+hostname
+hostname srv1.rhel7.com
+hostname
+
+
+
+
+
+
+
+1)application tam and database team need more space
+2)
+3)scheduled change management
+4)reboot of server for rhel3/4
+5)echo --/vendor script---for scanning a disk
+6)emc---powerpath and hitachi--hdlm---multipathing system
+7)emc powerpath command and hdlm manager command
+8)redhat---multipath.d---multipathing system software
+9)merge all 4 disk into single disk
+10)add pv
+11)add vg
+12)add lv
+
+
+
+
+
+
+
+
